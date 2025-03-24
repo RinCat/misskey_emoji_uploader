@@ -361,6 +361,10 @@ def start(  # noqa: PLR0913
         )
 
         if "error" in emoji_data:
+            if emoji_data["error"]["code"] == "DUPLICATE_NAME":
+                logging.warning("Emoji %s already exists. Skipping.", emoji_name)
+                skipped_count += 1
+                continue
             raise RuntimeError(emoji_data["error"])
 
         success_count += 1
